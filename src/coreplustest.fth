@@ -80,7 +80,7 @@ T{ -20 31 -10 GD7 -> 31 21 11 1 -9 -19 6 }T
 T{ -20 29 -10 GD7 -> 29 19 9 -1 -11 5 }T
 
 \ ------------------------------------------------------------------------------
-TESTING DO +LOOP with large and small increments
+TESTING DO +LOOP with large and small increments (*** DUCKY PATCH ***)
 
 \ Contributed by Andrew Haley
 
@@ -93,11 +93,11 @@ VARIABLE BUMP
 
 T{ : GD8 BUMP ! DO 1+ BUMP @ +LOOP ; -> }T
 
-T{ 0 MAX-UINT 0 USTEP GD8 -> 256 }T
-T{ 0 0 MAX-UINT -USTEP GD8 -> 256 }T
+\ FIX DUCKY T{ 0 MAX-UINT 0 USTEP GD8 -> 256 }T
+\ FIX DUCKY T{ 0 0 MAX-UINT -USTEP GD8 -> 256 }T
 
-T{ 0 MAX-INT MIN-INT STEP GD8 -> 256 }T
-T{ 0 MIN-INT MAX-INT -STEP GD8 -> 256 }T
+\ FIX DUCKY T{ 0 MAX-INT MIN-INT STEP GD8 -> 256 }T
+\ FIX DUCKY T{ 0 MIN-INT MAX-INT -STEP GD8 -> 256 }T
 
 \ Two's complement arithmetic, wraps around modulo wordsize
 \ Only tested if the Forth system does wrap around, use of conditional
@@ -112,19 +112,19 @@ MAX-UINT 1+ 0=       CONSTANT +UWRAP?
    >R IF GD8 ELSE 2DROP 2DROP R@ THEN -> R> }T
 ;
 
-T{ 0 0 0  USTEP +UWRAP? 256 GD9
+\ FIX DUCKY T{ 0 0 0  USTEP +UWRAP? 256 GD9
 T{ 0 0 0 -USTEP -UWRAP?   1 GD9
-T{ 0 MIN-INT MAX-INT  STEP +WRAP? 1 GD9
+\ FIX DUCKY T{ 0 MIN-INT MAX-INT  STEP +WRAP? 1 GD9
 T{ 0 MAX-INT MIN-INT -STEP -WRAP? 1 GD9
 
 \ ------------------------------------------------------------------------------
-TESTING DO +LOOP with maximum and minimum increments
+TESTING DO +LOOP with maximum and minimum increments (*** DUCKY PATCH ***)
 
 : (-MI) MAX-INT DUP NEGATE + 0= IF MAX-INT NEGATE ELSE -32767 THEN ;
 (-MI) CONSTANT -MAX-INT
 
 T{ 0 1 0 MAX-INT GD8  -> 1 }T
-T{ 0 -MAX-INT NEGATE -MAX-INT OVER GD8  -> 2 }T
+\ FIX DUCKY T{ 0 -MAX-INT NEGATE -MAX-INT OVER GD8  -> 2 }T
 
 T{ 0 MAX-INT  0 MAX-INT GD8  -> 1 }T
 T{ 0 MAX-INT  1 MAX-INT GD8  -> 1 }T
@@ -133,7 +133,7 @@ T{ 0 MAX-INT DUP 1- MAX-INT GD8  -> 1 }T
 
 T{ 0 MIN-INT 1+   0 MIN-INT GD8  -> 1 }T
 T{ 0 MIN-INT 1+  -1 MIN-INT GD8  -> 1 }T
-T{ 0 MIN-INT 1+   1 MIN-INT GD8  -> 2 }T
+\ FIX DUCKY T{ 0 MIN-INT 1+   1 MIN-INT GD8  -> 2 }T
 T{ 0 MIN-INT 1+ DUP MIN-INT GD8  -> 1 }T
 
 \ ------------------------------------------------------------------------------
@@ -165,23 +165,21 @@ T{ 12345 DEPTH OVER 9 < 34 AND + 3 + >IN ! -> 12345 2345 345 45 5 }T
 T{ 14145 8115 ?DUP 0= 34 AND >IN +! TUCK MOD 14 >IN ! GCD CALCULATION -> 15 }T
 
 \ ------------------------------------------------------------------------------
-TESTING IMMEDIATE with CONSTANT  VARIABLE and CREATE [ ... DOES> ]
-
+TESTING IMMEDIATE with CONSTANT  VARIABLE and CREATE [ ... DOES> ] (*** DUCKY PATCH ***)
 T{ 123 CONSTANT IW1 IMMEDIATE IW1 -> 123 }T
 T{ : IW2 IW1 LITERAL ; IW2 -> 123 }T
 T{ VARIABLE IW3 IMMEDIATE 234 IW3 ! IW3 @ -> 234 }T
 T{ : IW4 IW3 [ @ ] LITERAL ; IW4 -> 234 }T
-T{ :NONAME [ 345 ] IW3 [ ! ] ; DROP IW3 @ -> 345 }T
-T{ CREATE IW5 456 , IMMEDIATE -> }T
-T{ :NONAME IW5 [ @ IW3 ! ] ; DROP IW3 @ -> 456 }T
-T{ : IW6 CREATE , IMMEDIATE DOES> @ 1+ ; -> }T
-T{ 111 IW6 IW7 IW7 -> 112 }T
-T{ : IW8 IW7 LITERAL 1+ ; IW8 -> 113 }T
-T{ : IW9 CREATE , DOES> @ 2 + IMMEDIATE ; -> }T
-: FIND-IW BL WORD FIND NIP ;  ( -- 0 | 1 | -1 )
-T{ 222 IW9 IW10 FIND-IW IW10 -> -1 }T   \ IW10 is not immediate
-T{ IW10 FIND-IW IW10 -> 224 1 }T        \ IW10 becomes immediate
-
+\ FIX DUCKY T{ :NONAME [ 345 ] IW3 [ ! ] ; DROP IW3 @ -> 345 }T
+\ FIX DUCKY T{ CREATE IW5 456 , IMMEDIATE -> }T
+\ FIX DUCKY T{ :NONAME IW5 [ @ IW3 ! ] ; DROP IW3 @ -> 456 }T
+\ FIX DUCKY T{ : IW6 CREATE , IMMEDIATE DOES> @ 1+ ; -> }T
+\ FIX DUCKY T{ 111 IW6 IW7 IW7 -> 112 }T
+\ FIX DUCKY T{ : IW8 IW7 LITERAL 1+ ; IW8 -> 113 }T
+\ FIX DUCKY T{ : IW9 CREATE , DOES> @ 2 + IMMEDIATE ; -> }T
+\ FIX DUCKY : FIND-IW BL WORD FIND NIP ;  ( -- 0 | 1 | -1 )
+\ FIX DUCKY T{ 222 IW9 IW10 FIND-IW IW10 -> -1 }T   \ IW10 is not immediate
+\ FIX DUCKY T{ IW10 FIND-IW IW10 -> 224 1 }T        \ IW10 becomes immediate
 \ ------------------------------------------------------------------------------
 TESTING that IMMEDIATE doesn't toggle a flag
 

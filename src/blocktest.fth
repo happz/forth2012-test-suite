@@ -36,8 +36,8 @@ DECIMAL
 \ The blocks tested will be in the range
 \    FIRST-TEST-BLOCK <= u < LIMIT-TEST-BLOCK
 \ The tests need at least 2 test blocks in the range to complete.
-20 CONSTANT FIRST-TEST-BLOCK
-30 CONSTANT LIMIT-TEST-BLOCK \ one beyond the last
+1 CONSTANT FIRST-TEST-BLOCK
+101 CONSTANT LIMIT-TEST-BLOCK \ one beyond the last
 
 FIRST-TEST-BLOCK LIMIT-TEST-BLOCK U< 0= [?IF]
 \?  .( Error: Test Block range not identified ) CR ABORT

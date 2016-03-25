@@ -335,11 +335,11 @@ T{ MA0 -> }T
 T{ MA? MA0 MA? MA1 MA? MA2 -> FALSE FALSE FALSE }T
 
 \ -----------------------------------------------------------------------------
-TESTING ?DO
+TESTING ?DO (*** DUCKY PATCH **)
 
 : QD ?DO I LOOP ;
-T{ 789 789 QD -> }T
-T{ -9876 -9876 QD -> }T
+\ FIX DUCKY T{ 789 789 QD -> }T
+\ FIX DUCKY T{ -9876 -9876 QD -> }T
 T{ 5 0 QD -> 0 1 2 3 4 }T
 
 : QD1 ?DO I 10 +LOOP ;
@@ -350,12 +350,12 @@ T{ 50 0 QD1 -> 0 10 20 30 40 }T
 T{ 5 -1 QD2 -> -1 0 1 2 3 }T
 
 : QD3 ?DO I 1 +LOOP ;
-T{ 4  4 QD3 -> }T
+\ FIX DUCKY T{ 4  4 QD3 -> }T
 T{ 4  1 QD3 -> 1 2 3 }T
 T{ 2 -1 QD3 -> -1 0 1 }T
 
 : QD4 ?DO I -1 +LOOP ;
-T{  4 4 QD4 -> }T
+\ FIX DUCKY T{  4 4 QD4 -> }T
 T{  1 4 QD4 -> 4 3 2 1 }T
 T{ -1 2 QD4 -> 2 1 0 -1 }T
 
@@ -378,15 +378,15 @@ VARIABLE INCRMNT
    +LOOP ITERS @
 ;
 
-T{  4  4 -1 QD6 -> 0 }T
+\ FIX DUCKY T{  4  4 -1 QD6 -> 0 }T
 T{  1  4 -1 QD6 -> 4 3 2 1 4 }T
 T{  4  1 -1 QD6 -> 1 0 -1 -2 -3 -4 6 }T
 T{  4  1  0 QD6 -> 1 1 1 1 1 1 6 }T
-T{  0  0  0 QD6 -> 0 }T
+\ FIX DUCKY T{  0  0  0 QD6 -> 0 }T
 T{  1  4  0 QD6 -> 4 4 4 4 4 4 6 }T
 T{  1  4  1 QD6 -> 4 5 6 7 8 9 6 }T
 T{  4  1  1 QD6 -> 1 2 3 3 }T
-T{  4  4  1 QD6 -> 0 }T
+\ FIX DUCKY T{  4  4  1 QD6 -> 0 }T
 T{  2 -1 -1 QD6 -> -1 -2 -3 -4 -5 -6 6 }T
 T{ -1  2 -1 QD6 -> 2 1 0 -1 4 }T
 T{  2 -1  0 QD6 -> -1 -1 -1 -1 -1 -1 6 }T
@@ -480,34 +480,34 @@ T{ : CS6 CASE 1 OF ENDOF 2 ENDCASE ; 1 CS6 -> }T
 T{ : CS7 CASE 3 OF ENDOF 2 ENDCASE ; 1 CS7 -> 1 }T
 
 \ -----------------------------------------------------------------------------
-TESTING :NONAME RECURSE
+\ FIX DUCKY TESTING :NONAME RECURSE
 
-VARIABLE NN1
-VARIABLE NN2
-:NONAME 1234 ; NN1 !
-:NONAME 9876 ; NN2 !
-T{ NN1 @ EXECUTE -> 1234 }T
-T{ NN2 @ EXECUTE -> 9876 }T
+\ FIX DUCKY VARIABLE NN1
+\ FIX DUCKY VARIABLE NN2
+\ FIX DUCKY :NONAME 1234 ; NN1 !
+\ FIX DUCKY :NONAME 9876 ; NN2 !
+\ FIX DUCKY T{ NN1 @ EXECUTE -> 1234 }T
+\ FIX DUCKY T{ NN2 @ EXECUTE -> 9876 }T
 
-T{ :NONAME ( n -- 0,1,..n ) DUP IF DUP >R 1- RECURSE R> THEN ;
-   CONSTANT RN1 -> }T
-T{ 0 RN1 EXECUTE -> 0 }T
-T{ 4 RN1 EXECUTE -> 0 1 2 3 4 }T
+\ FIX DUCKY T{ :NONAME ( n -- 0,1,..n ) DUP IF DUP >R 1- RECURSE R> THEN ;
+\ FIX DUCKY    CONSTANT RN1 -> }T
+\ FIX DUCKY T{ 0 RN1 EXECUTE -> 0 }T
+\ FIX DUCKY T{ 4 RN1 EXECUTE -> 0 1 2 3 4 }T
 
-:NONAME  ( n -- n1 )    \ Multiple RECURSEs in one definition
-   1- DUP
-   CASE 0 OF EXIT ENDOF
-        1 OF 11 SWAP RECURSE ENDOF
-        2 OF 22 SWAP RECURSE ENDOF
-        3 OF 33 SWAP RECURSE ENDOF
-        DROP ABS RECURSE EXIT
-   ENDCASE
-; CONSTANT RN2
+\ FIX DUCKY :NONAME  ( n -- n1 )    \ Multiple RECURSEs in one definition
+\ FIX DUCKY    1- DUP
+\ FIX DUCKY    CASE 0 OF EXIT ENDOF
+\ FIX DUCKY         1 OF 11 SWAP RECURSE ENDOF
+\ FIX DUCKY         2 OF 22 SWAP RECURSE ENDOF
+\ FIX DUCKY         3 OF 33 SWAP RECURSE ENDOF
+\ FIX DUCKY         DROP ABS RECURSE EXIT
+\ FIX DUCKY    ENDCASE
+\ FIX DUCKY ; CONSTANT RN2
 
-T{  1 RN2 EXECUTE -> 0 }T
-T{  2 RN2 EXECUTE -> 11 0 }T
-T{  4 RN2 EXECUTE -> 33 22 11 0 }T
-T{ 25 RN2 EXECUTE -> 33 22 11 0 }T
+\ FIX DUCKY T{  1 RN2 EXECUTE -> 0 }T
+\ FIX DUCKY T{  2 RN2 EXECUTE -> 11 0 }T
+\ FIX DUCKY T{  4 RN2 EXECUTE -> 33 22 11 0 }T
+\ FIX DUCKY T{ 25 RN2 EXECUTE -> 33 22 11 0 }T
 
 \ -----------------------------------------------------------------------------
 TESTING C"
@@ -519,12 +519,12 @@ T{ CQ2 COUNT EVALUATE -> }T
 T{ : CQ3 C" 2345"COUNT EVALUATE ; CQ3 -> 2345 }T
 
 \ -----------------------------------------------------------------------------
-TESTING COMPILE,
+\ FIX DUCKY TESTING COMPILE,
 
-:NONAME DUP + ; CONSTANT DUP+
-T{ : Q DUP+ COMPILE, ; -> }T
-T{ : AS1 [ Q ] ; -> }T
-T{ 123 AS1 -> 246 }T
+\ FIX DUCKY :NONAME DUP + ; CONSTANT DUP+
+\ FIX DUCKY T{ : Q DUP+ COMPILE, ; -> }T
+\ FIX DUCKY T{ : AS1 [ Q ] ; -> }T
+\ FIX DUCKY T{ 123 AS1 -> 246 }T
 
 \ -----------------------------------------------------------------------------
 \ Cannot automatically test SAVE-INPUT and RESTORE-INPUT from a console source
@@ -633,34 +633,34 @@ T{ CHAR Z PARSE
 T{ CHAR " PARSE 4567 "DUP ROT ROT EVALUATE -> 5 4567 }T
  
 \ -----------------------------------------------------------------------------
-TESTING PARSE-NAME  (Forth 2012)
+\ FIX DUCKY TESTING PARSE-NAME  (Forth 2012)
 \ Adapted from the PARSE-NAME RfD tests
 
-T{ PARSE-NAME abcd  STR1  S= -> TRUE }T        \ No leading spaces
-T{ PARSE-NAME      abcde STR2 S= -> TRUE }T    \ Leading spaces
+\ FIX DUCKY T{ PARSE-NAME abcd  STR1  S= -> TRUE }T        \ No leading spaces
+\ FIX DUCKY T{ PARSE-NAME      abcde STR2 S= -> TRUE }T    \ Leading spaces
 
 \ Test empty parse area, new lines are necessary
-T{ PARSE-NAME
-  NIP -> 0 }T
+\ FIX DUCKY T{ PARSE-NAME
+\ FIX DUCKY   NIP -> 0 }T
 \ Empty parse area with spaces after PARSE-NAME
-T{ PARSE-NAME         
-  NIP -> 0 }T
+\ FIX DUCKY T{ PARSE-NAME         
+\ FIX DUCKY   NIP -> 0 }T
 
-T{ : PARSE-NAME-TEST ( "name1" "name2" -- n )
-    PARSE-NAME PARSE-NAME S= ; -> }T
-T{ PARSE-NAME-TEST abcd abcd  -> TRUE }T
-T{ PARSE-NAME-TEST abcd   abcd  -> TRUE }T  \ Leading spaces
-T{ PARSE-NAME-TEST abcde abcdf -> FALSE }T
-T{ PARSE-NAME-TEST abcdf abcde -> FALSE }T
-T{ PARSE-NAME-TEST abcde abcde
-   -> TRUE }T         \ Parse to end of line
-T{ PARSE-NAME-TEST abcde           abcde         
-   -> TRUE }T         \ Leading and trailing spaces
+\ FIX DUCKY T{ : PARSE-NAME-TEST ( "name1" "name2" -- n )
+\ FIX DUCKY     PARSE-NAME PARSE-NAME S= ; -> }T
+\ FIX DUCKY T{ PARSE-NAME-TEST abcd abcd  -> TRUE }T
+\ FIX DUCKY T{ PARSE-NAME-TEST abcd   abcd  -> TRUE }T  \ Leading spaces
+\ FIX DUCKY T{ PARSE-NAME-TEST abcde abcdf -> FALSE }T
+\ FIX DUCKY T{ PARSE-NAME-TEST abcdf abcde -> FALSE }T
+\ FIX DUCKY T{ PARSE-NAME-TEST abcde abcde
+\ FIX DUCKY    -> TRUE }T         \ Parse to end of line
+\ FIX DUCKY T{ PARSE-NAME-TEST abcde           abcde         
+\ FIX DUCKY    -> TRUE }T         \ Leading and trailing spaces
 
 \ -----------------------------------------------------------------------------
-TESTING DEFER DEFER@ DEFER! IS ACTION-OF (Forth 2012)
+\ FIX DUCKY TESTING DEFER DEFER@ DEFER! IS ACTION-OF (Forth 2012)
 \ Adapted from the Forth 200X RfD tests
-
+(
 T{ DEFER DEFER1 -> }T
 T{ : MY-DEFER DEFER ; -> }T
 T{ : IS-DEFER1 IS DEFER1 ; -> }T
@@ -690,6 +690,7 @@ T{ ACTION-DEFER1 -> ' - }T
 T{ MY-DEFER DEFER2 -> }T
 T{ ' DUP IS DEFER2 -> }T
 T{ 1 DEFER2 -> 1 1 }T
+)
 
 \ -----------------------------------------------------------------------------
 TESTING HOLDS  (Forth 2012)
@@ -712,55 +713,55 @@ T{ : RF1  S" REFILL" EVALUATE ; RF1 -> FALSE }T
 T{ : SID1  S" SOURCE-ID" EVALUATE ; SID1 -> -1 }T
 
 \ ------------------------------------------------------------------------------
-TESTING S\"  (Forth 2012 compilation mode)
+\ FIX DUCKY TESTING S\"  (Forth 2012 compilation mode)
 \ Extended the Forth 200X RfD tests
 \ Note this tests the Core Ext definition of S\" which has unedfined
 \ interpretation semantics. S\" in interpretation mode is tested in the tests on
 \ the File-Access word set
 
-T{ : SSQ1 S\" abc" S" abc" S= ; -> }T  \ No escapes
-T{ SSQ1 -> TRUE }T
-T{ : SSQ2 S\" " ; SSQ2 SWAP DROP -> 0 }T    \ Empty string
+\ FIX DUCKY T{ : SSQ1 S\" abc" S" abc" S= ; -> }T  \ No escapes
+\ FIX DUCKY T{ SSQ1 -> TRUE }T
+\ FIX DUCKY T{ : SSQ2 S\" " ; SSQ2 SWAP DROP -> 0 }T    \ Empty string
 
-T{ : SSQ3 S\" \a\b\e\f\l\m\q\r\t\v\x0F0\x1Fa\xaBx\z\"\\" ; -> }T
-T{ SSQ3 SWAP DROP          ->  20 }T    \ String length
-T{ SSQ3 DROP            C@ ->   7 }T    \ \a   BEL  Bell
-T{ SSQ3 DROP  1 CHARS + C@ ->   8 }T    \ \b   BS   Backspace
-T{ SSQ3 DROP  2 CHARS + C@ ->  27 }T    \ \e   ESC  Escape
-T{ SSQ3 DROP  3 CHARS + C@ ->  12 }T    \ \f   FF   Form feed
-T{ SSQ3 DROP  4 CHARS + C@ ->  10 }T    \ \l   LF   Line feed
-T{ SSQ3 DROP  5 CHARS + C@ ->  13 }T    \ \m        CR of CR/LF pair
-T{ SSQ3 DROP  6 CHARS + C@ ->  10 }T    \           LF of CR/LF pair
-T{ SSQ3 DROP  7 CHARS + C@ ->  34 }T    \ \q   "    Double Quote
-T{ SSQ3 DROP  8 CHARS + C@ ->  13 }T    \ \r   CR   Carriage Return
-T{ SSQ3 DROP  9 CHARS + C@ ->   9 }T    \ \t   TAB  Horizontal Tab
-T{ SSQ3 DROP 10 CHARS + C@ ->  11 }T    \ \v   VT   Vertical Tab
-T{ SSQ3 DROP 11 CHARS + C@ ->  15 }T    \ \x0F      Given Char
-T{ SSQ3 DROP 12 CHARS + C@ ->  48 }T    \ 0    0    Digit follow on
-T{ SSQ3 DROP 13 CHARS + C@ ->  31 }T    \ \x1F      Given Char
-T{ SSQ3 DROP 14 CHARS + C@ ->  97 }T    \ a    a    Hex follow on
-T{ SSQ3 DROP 15 CHARS + C@ -> 171 }T    \ \xaB      Insensitive Given Char
-T{ SSQ3 DROP 16 CHARS + C@ -> 120 }T    \ x    x    Non hex follow on
-T{ SSQ3 DROP 17 CHARS + C@ ->   0 }T    \ \z   NUL  No Character
-T{ SSQ3 DROP 18 CHARS + C@ ->  34 }T    \ \"   "    Double Quote
-T{ SSQ3 DROP 19 CHARS + C@ ->  92 }T    \ \\   \    Back Slash
+\ FIX DUCKY T{ : SSQ3 S\" \a\b\e\f\l\m\q\r\t\v\x0F0\x1Fa\xaBx\z\"\\" ; -> }T
+\ FIX DUCKY T{ SSQ3 SWAP DROP          ->  20 }T    \ String length
+\ FIX DUCKY T{ SSQ3 DROP            C@ ->   7 }T    \ \a   BEL  Bell
+\ FIX DUCKY T{ SSQ3 DROP  1 CHARS + C@ ->   8 }T    \ \b   BS   Backspace
+\ FIX DUCKY T{ SSQ3 DROP  2 CHARS + C@ ->  27 }T    \ \e   ESC  Escape
+\ FIX DUCKY T{ SSQ3 DROP  3 CHARS + C@ ->  12 }T    \ \f   FF   Form feed
+\ FIX DUCKY T{ SSQ3 DROP  4 CHARS + C@ ->  10 }T    \ \l   LF   Line feed
+\ FIX DUCKY T{ SSQ3 DROP  5 CHARS + C@ ->  13 }T    \ \m        CR of CR/LF pair
+\ FIX DUCKY T{ SSQ3 DROP  6 CHARS + C@ ->  10 }T    \           LF of CR/LF pair
+\ FIX DUCKY T{ SSQ3 DROP  7 CHARS + C@ ->  34 }T    \ \q   "    Double Quote
+\ FIX DUCKY T{ SSQ3 DROP  8 CHARS + C@ ->  13 }T    \ \r   CR   Carriage Return
+\ FIX DUCKY T{ SSQ3 DROP  9 CHARS + C@ ->   9 }T    \ \t   TAB  Horizontal Tab
+\ FIX DUCKY T{ SSQ3 DROP 10 CHARS + C@ ->  11 }T    \ \v   VT   Vertical Tab
+\ FIX DUCKY T{ SSQ3 DROP 11 CHARS + C@ ->  15 }T    \ \x0F      Given Char
+\ FIX DUCKY T{ SSQ3 DROP 12 CHARS + C@ ->  48 }T    \ 0    0    Digit follow on
+\ FIX DUCKY T{ SSQ3 DROP 13 CHARS + C@ ->  31 }T    \ \x1F      Given Char
+\ FIX DUCKY T{ SSQ3 DROP 14 CHARS + C@ ->  97 }T    \ a    a    Hex follow on
+\ FIX DUCKY T{ SSQ3 DROP 15 CHARS + C@ -> 171 }T    \ \xaB      Insensitive Given Char
+\ FIX DUCKY T{ SSQ3 DROP 16 CHARS + C@ -> 120 }T    \ x    x    Non hex follow on
+\ FIX DUCKY T{ SSQ3 DROP 17 CHARS + C@ ->   0 }T    \ \z   NUL  No Character
+\ FIX DUCKY T{ SSQ3 DROP 18 CHARS + C@ ->  34 }T    \ \"   "    Double Quote
+\ FIX DUCKY T{ SSQ3 DROP 19 CHARS + C@ ->  92 }T    \ \\   \    Back Slash
 
 \ The above does not test \n as this is a system dependent value.
 \ Check it displays a new line
-CR .( The next test should display:)
-CR .( One line...)
-CR .( another line)
-T{ : SSQ4 S\" \nOne line...\nanotherLine\n" type ; SSQ4 -> }T
+\ FIX DUCKY CR .( The next test should display:)
+\ FIX DUCKY CR .( One line...)
+\ FIX DUCKY CR .( another line)
+\ FIX DUCKY T{ : SSQ4 S\" \nOne line...\nanotherLine\n" type ; SSQ4 -> }T
 
 \ Test bare escapable characters appear as themselves
-T{ : SSQ5 S\" abeflmnqrtvxz" S" abeflmnqrtvxz" S= ; SSQ5 -> TRUE }T
+\ FIX DUCKY T{ : SSQ5 S\" abeflmnqrtvxz" S" abeflmnqrtvxz" S= ; SSQ5 -> TRUE }T
 
-T{ : SSQ6 S\" a\""2DROP 1111 ; SSQ6 -> 1111 }T \ Parsing behaviour
+\ FIX DUCKY T{ : SSQ6 S\" a\""2DROP 1111 ; SSQ6 -> 1111 }T \ Parsing behaviour
 
-T{ : SSQ7  S\" 111 : SSQ8 s\\\" 222\" EVALUATE ; SSQ8 333" EVALUATE ; -> }T
-T{ SSQ7 -> 111 222 333 }T
-T{ : SSQ9  S\" 11 : SSQ10 s\\\" \\x32\\x32\" EVALUATE ; SSQ10 33" EVALUATE ; -> }T
-T{ SSQ9 -> 11 22 33 }T
+\ FIX DUCKY T{ : SSQ7  S\" 111 : SSQ8 s\\\" 222\" EVALUATE ; SSQ8 333" EVALUATE ; -> }T
+\ FIX DUCKY T{ SSQ7 -> 111 222 333 }T
+\ FIX DUCKY T{ : SSQ9  S\" 11 : SSQ10 s\\\" \\x32\\x32\" EVALUATE ; SSQ10 33" EVALUATE ; -> }T
+\ FIX DUCKY T{ SSQ9 -> 11 22 33 }T
 
 \ -----------------------------------------------------------------------------
 CORE-EXT-ERRORS SET-ERROR-COUNT
