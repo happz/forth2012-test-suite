@@ -258,11 +258,11 @@ CREATE NON-EXISTENT-WORD   \ Same as in exceptiontest.fth
 T{ NON-EXISTENT-WORD FIND -> NON-EXISTENT-WORD 0 }T
 
 \ ------------------------------------------------------------------------------
-TESTING IF ... BEGIN ... REPEAT (unstructured)
+\ FIX DUCKY TESTING IF ... BEGIN ... REPEAT (unstructured)
 
-T{ : UNS1 DUP 0 > IF 9 SWAP BEGIN 1+ DUP 3 > IF EXIT THEN REPEAT ; -> }T
-T{ -6 UNS1 -> -6 }T
-T{  1 UNS1 -> 9 4 }T
+\ FIX DUCKY T{ : UNS1 DUP 0 > IF 9 SWAP BEGIN 1+ DUP 3 > IF EXIT THEN REPEAT ; -> }T
+\ FIX DUCKY T{ -6 UNS1 -> -6 }T
+\ FIX DUCKY T{  1 UNS1 -> 9 4 }T
 
 \ ------------------------------------------------------------------------------
 TESTING DOES> doesn't cause a problem with a CREATEd address
