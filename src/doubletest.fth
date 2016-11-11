@@ -338,6 +338,7 @@ T{ MAX-2INT DABS -> MAX-2INT }T
 T{ MIN-2INT 1. D+ DABS -> MAX-2INT }T
 
 \ ------------------------------------------------------------------------------
+(
 TESTING M+ M*/
 
 T{ HI-2INT   1 M+ -> HI-2INT   1. D+ }T
@@ -364,35 +365,35 @@ T{ MIN-2INT LO-2INT NIP DUP NEGATE M*/ -> MIN-2INT }T
 T{ MIN-2INT LO-2INT NIP 1- MAX-INTD M*/ -> MIN-INTD 3 + HI-2INT NIP 2 + }T
 T{ MAX-2INT LO-2INT NIP DUP NEGATE M*/ -> MAX-2INT DNEGATE }T
 T{ MIN-2INT MAX-INTD DUP M*/ -> MIN-2INT }T
-
+)
 \ ------------------------------------------------------------------------------
-TESTING D. D.R
+\ FIX DUCKY TESTING D. D.R
 
 \ Create some large double numbers
-MAX-2INT 71 73 M*/ 2CONSTANT DBL1
-MIN-2INT 73 79 M*/ 2CONSTANT DBL2
+\ FIX DUCKY MAX-2INT 71 73 M*/ 2CONSTANT DBL1
+\ FIX DUCKY MIN-2INT 73 79 M*/ 2CONSTANT DBL2
 
-: D>ASCII  ( D -- CADDR U )
-   DUP >R <# DABS #S R> SIGN #>    ( -- CADDR1 U )
-   HERE SWAP 2DUP 2>R CHARS DUP ALLOT MOVE 2R>
-;
+\ FIX DUCKY : D>ASCII  ( D -- CADDR U )
+\ FIX DUCKY    DUP >R <# DABS #S R> SIGN #>    ( -- CADDR1 U )
+\ FIX DUCKY    HERE SWAP 2DUP 2>R CHARS DUP ALLOT MOVE 2R>
+\ FIX DUCKY ;
 
-DBL1 D>ASCII 2CONSTANT "DBL1"
-DBL2 D>ASCII 2CONSTANT "DBL2"
+\ FIX DUCKY DBL1 D>ASCII 2CONSTANT "DBL1"
+\ FIX DUCKY DBL2 D>ASCII 2CONSTANT "DBL2"
 
-: DOUBLEOUTPUT
-   CR ." You should see lines duplicated:" CR
-   5 SPACES "DBL1" TYPE CR
-   5 SPACES DBL1 D. CR
-   8 SPACES "DBL1" DUP >R TYPE CR
-   5 SPACES DBL1 R> 3 + D.R CR
-   5 SPACES "DBL2" TYPE CR
-   5 SPACES DBL2 D. CR
-   10 SPACES "DBL2" DUP >R TYPE CR
-   5 SPACES DBL2 R> 5 + D.R CR
-;
+\ FIX DUCKY : DOUBLEOUTPUT
+\ FIX DUCKY    CR ." You should see lines duplicated:" CR
+\ FIX DUCKY    5 SPACES "DBL1" TYPE CR
+\ FIX DUCKY    5 SPACES DBL1 D. CR
+\ FIX DUCKY    8 SPACES "DBL1" DUP >R TYPE CR
+\ FIX DUCKY    5 SPACES DBL1 R> 3 + D.R CR
+\ FIX DUCKY    5 SPACES "DBL2" TYPE CR
+\ FIX DUCKY    5 SPACES DBL2 D. CR
+\ FIX DUCKY    10 SPACES "DBL2" DUP >R TYPE CR
+\ FIX DUCKY    5 SPACES DBL2 R> 5 + D.R CR
+\ FIX DUCKY ;
 
-T{ DOUBLEOUTPUT -> }T
+\ FIX DUCKY T{ DOUBLEOUTPUT -> }T
 
 \ ------------------------------------------------------------------------------
 TESTING 2ROT DU< (Double Number extension words)
